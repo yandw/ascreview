@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "ascrview",
+  "name": "ASC Review",
   "version": "1.0.0",
   "description": "A browser extension to scrape comments from App Store.",
   "permissions": [
