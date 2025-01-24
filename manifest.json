@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ASC Review",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A browser extension to scrape comments from App Store.",
   "permissions": [
     "activeTab",

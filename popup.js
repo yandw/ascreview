@@ -15,12 +15,8 @@ function scrapeComments() {
 
   commentElements.forEach(commentElement => {
     const ratingElement = commentElement.querySelector('.we-customer-review__rating');
-    
-    const ratingAriaLabel = ratingElement?.getAttribute('aria-label') || '';
-    // 更新正则表达式以正确提取评分值，并直接赋值给 rating
-    const rating = ratingAriaLabel.match(/(\d+(\.\d+)?)\（/)?.[1].trim() || ''; // 提取评分并去掉多余的字符
-
-    const nicknameElement = commentElement.querySelector('.we-customer-review__author__name');
+    const rating = ratingElement ? parseFloat(ratingElement.getAttribute('aria-label').trim()[0]) : 0; // 直接取去除首尾空格后的第一个字符值为rating值
+    const nicknameElement = commentElement.querySelector('.we-customer-review__user');
     const nickname = nicknameElement ? nicknameElement.textContent.trim() : '';
     const titleElement = commentElement.querySelector('.we-customer-review__title');
     const title = titleElement ? titleElement.textContent.trim() : '';
@@ -31,17 +27,12 @@ function scrapeComments() {
     comments.push(comment);
   });
 
-    // 发送每条评论到本地的ollama接口
-    // sendCommentToOllama(comment);
+  // 发送每条评论到本地的ollama接口
+  // sendCommentToOllama(comment);
 
   console.log("Comments scraped:", comments);
 
-  displayComments(comments);
-}
-
-function displayComments(comments) {
-  console.log("Displaying comments...");
-
+  // 将 displayComments 的逻辑直接嵌入到 scrapeComments 中
   const container = document.createElement('div');
   container.style.position = 'fixed';
   container.style.top = '10px';
