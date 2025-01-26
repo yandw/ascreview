@@ -1,7 +1,8 @@
 # App Store Customer Review
 
 # 项目概述
-详细介绍项目的背景、目标和应用场景。解释项目解决了什么问题，以及它的重要性和独特之处。
+App Store Customer Review 是一个浏览器扩展，用于从 App Store 中抓取评论，并将其保存到本地。
+这个分支使用Cursor编写，使用ChatGPT进行优化。
 
 # 功能特性
 列举项目的主要功能和特性，可以使用列表或小标题的形式进行清晰展示。
