@@ -3,13 +3,16 @@ function checkLoginStatus() {
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   const loginForm = document.getElementById('loginForm');
   const mainContent = document.getElementById('mainContent');
+  const scrapeContainer = document.getElementById('scrapeContainer');
 
   if (isLoggedIn === 'true') {
     loginForm.classList.remove('active');
     mainContent.classList.add('active');
+    scrapeContainer.style.display = 'block';
   } else {
     loginForm.classList.add('active');
     mainContent.classList.remove('active');
+    scrapeContainer.style.display = 'none';
   }
 }
 
