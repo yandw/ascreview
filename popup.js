@@ -1,10 +1,54 @@
+// 检查登录状态
+function checkLoginStatus() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const loginForm = document.getElementById('loginForm');
+  const mainContent = document.getElementById('mainContent');
+
+  if (isLoggedIn === 'true') {
+    loginForm.classList.remove('active');
+    mainContent.classList.add('active');
+  } else {
+    loginForm.classList.add('active');
+    mainContent.classList.remove('active');
+  }
+}
+
+// 登录处理
+document.getElementById('loginButton').addEventListener('click', () => {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const loginError = document.getElementById('loginError');
+
+  // 这里可以添加实际的用户验证逻辑
+  if (username === 'admin' && password === 'admin123') {
+    localStorage.setItem('isLoggedIn', 'true');
+    checkLoginStatus();
+    loginError.style.display = 'none';
+  } else {
+    loginError.textContent = '用户名或密码错误';
+    loginError.style.display = 'block';
+  }
+});
+
+// 登出处理
+document.getElementById('logoutButton').addEventListener('click', () => {
+  localStorage.removeItem('isLoggedIn');
+  checkLoginStatus();
+});
+
+// 页面加载时检查登录状态
+document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+// 抓取评论按钮事件
 document.getElementById('scrapeButton').addEventListener('click', () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.scripting.executeScript({
-      target: { tabId: tabs[0].id },
-      function: scrapeComments 
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        function: scrapeComments
+      });
     });
-  });
+  }
 });
 
 function scrapeComments() {
