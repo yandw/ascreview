@@ -1,22 +1,32 @@
 {
-  "manifest_version": 2,
-  "name": "Azure DevOps Work Item Helper",
+  "manifest_version": 3,
+  "name": "VS Work Item Query Helper",
   "version": "1.0",
-  "description": "用于Azure DevOps工作项页面的辅助工具",
+  "description": "一个用于Visual Studio工作项查询页面的辅助工具",
   "permissions": [
     "activeTab",
-    "*://msasg.visualstudio.com/*"
+    "scripting"
   ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+  "host_permissions": [
+    "https://msasg.visualstudio.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
   },
   "content_scripts": [{
-    "matches": ["*://msasg.visualstudio.com/*"],
+    "matches": ["https://msasg.visualstudio.com/*"],
     "js": ["content.js"]
   }],
   "icons": {
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   }
 }

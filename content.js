@@ -1,44 +1,48 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // 检查是否在工作项页面
-  if (window.location.href.includes('msasg.visualstudio.com') && window.location.href.includes('_queries/edit')) {
-    console.log('在工作项查询页面中');
-    
-    // 监听页面变化
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'childList') {
-          processWorkItems();
-        }
-      });
-    });
-
-    // 配置观察选项
-    const config = { childList: true, subtree: true };
-    
-    // 开始观察文档中的变化
-    observer.observe(document.body, config);
-    
-    // 初始处理
-    processWorkItems();
-  }
+// 监听页面加载完成事件
+document.addEventListener('DOMContentLoaded', () => {
+  // 定期检查页面内容
+  setInterval(checkPageContent, 2000);
 });
 
-function processWorkItems() {
-  // 查找工作项列表
-  const workItems = document.querySelectorAll('.grid-row');
-  
-  workItems.forEach(function(item) {
-    // 获取工作项数据
-    const workItemData = {
-      id: item.querySelector('.id-field')?.textContent,
-      title: item.querySelector('.title-field')?.textContent,
-      state: item.querySelector('.state-field')?.textContent
-    };
-    
-    // 发送数据到background script
+// 检查页面内容并提取数据
+function checkPageContent() {
+  try {
+    // 获取工作项查询结果
+    const workItems = Array.from(document.querySelectorAll('.grid-row'));
+    const workItemsData = workItems.map(row => {
+      const cells = row.querySelectorAll('.grid-cell');
+      return {
+        id: cells[0]?.textContent?.trim() || '',
+        title: cells[1]?.textContent?.trim() || '',
+        state: cells[2]?.textContent?.trim() || '',
+        assignedTo: cells[3]?.textContent?.trim() || ''
+      };
+    }).filter(item => item.id !== '');
+
+    // 获取查询标题
+    const queryTitle = document.querySelector('.hub-title')?.textContent?.trim() || '未命名查询';
+
+    // 发送数据到popup
     chrome.runtime.sendMessage({
-      type: 'getWorkItemData',
-      data: workItemData
+      type: 'workItemsData',
+      data: {
+        title: queryTitle,
+        items: workItemsData
+      }
     });
-  });
+  } catch (error) {
+    console.error('Error extracting work items data:', error);
+    chrome.runtime.sendMessage({
+      type: 'error',
+      message: '数据提取失败：' + error.message
+    });
+  }
 }
+
+// 监听来自popup的消息
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'getWorkItems') {
+    checkPageContent();
+  }
+  return true;
+});
