@@ -2,47 +2,53 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>VS Work Item Query Helper</title>
   <style>
     body {
       width: 300px;
-      padding: 10px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
     .container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      text-align: center;
     }
-    .item {
-      padding: 8px;
-      border: 1px solid #e0e0e0;
-      border-radius: 4px;
-      background-color: #f5f5f5;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
     }
-    .item-title {
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-    .item-content {
-      color: #666;
+    .description {
       font-size: 14px;
-    }
-    .loading {
-      text-align: center;
       color: #666;
-      padding: 20px;
+      line-height: 1.5;
+      margin-bottom: 16px;
     }
-    .error {
-      color: #d32f2f;
-      padding: 10px;
-      text-align: center;
+    .version {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 16px;
+    }
+    .open-sidepanel {
+      padding: 8px 16px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .open-sidepanel:hover {
+      background-color: #106ebe;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="content">
-    <div class="loading">正在加载数据...</div>
+  <div class="container">
+    <div class="title">ASC Review Assistant</div>
+    <div class="description">帮助您更高效地进行ASC工作项审查和管理的智能助手。</div>
+    <div class="version">版本 1.0.0</div>
+    <button class="open-sidepanel" id="open-sidepanel">打开工作面板</button>
   </div>
   <script src="popup.js"></script>
 </body>

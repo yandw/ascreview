@@ -1,15 +1,48 @@
-import { createDesMode } from './shared/des-mode.js';
+// DES Mode共享功能模块
 
-// 初始化页面
-document.addEventListener('DOMContentLoaded', () => {
-  // 定期检查页面内容
-  setInterval(checkPageContent, 2000);
-  // 创建并添加DES Mode浮窗
-  createDesMode();
-});
+// 初始化DES Mode按钮事件
+export function initDesMode() {
+  const editButton = document.getElementById('edit-button');
+  const generateButton = document.getElementById('generate-button');
+  const executeButton = document.getElementById('execute-button');
+
+  if (editButton) {
+    editButton.addEventListener('click', () => {
+      const inputs = document.querySelectorAll('.field-input:not(#ai-gen), .field-select');
+      inputs.forEach(input => input.disabled = false);
+    });
+  }
+
+  if (generateButton) {
+    generateButton.addEventListener('click', () => {
+      const aiGen = document.getElementById('ai-gen');
+      if (aiGen) {
+        aiGen.value = '正在生成AI建议...';
+      }
+    });
+  }
+
+  if (executeButton) {
+    executeButton.addEventListener('click', () => {
+      const config = {
+        featureCrew: document.getElementById('feature-crew')?.value,
+        issue: document.getElementById('issue')?.value,
+        owner: document.getElementById('owner')?.value,
+        rootCause: document.getElementById('root-cause')?.value,
+        state: document.getElementById('state')?.value,
+        priority: document.getElementById('priority')?.value
+      };
+      console.log('执行配置:', config);
+    });
+  }
+
+  // 初始禁用所有输入字段
+  const inputs = document.querySelectorAll('.field-input:not(#ai-gen), .field-select');
+  inputs.forEach(input => input.disabled = true);
+}
 
 // 创建DES Mode浮窗
-function createDesMode() {
+export function createDesMode() {
   const desMode = document.createElement('div');
   desMode.id = 'des-mode';
   desMode.style.cssText = `
@@ -140,90 +173,3 @@ function createDesMode() {
   document.body.appendChild(desMode);
   initDesMode();
 }
-
-// 初始化DES Mode按钮事件
-function initDesMode() {
-  document.getElementById('edit-button').addEventListener('click', () => {
-    const inputs = document.querySelectorAll('#des-mode .field-input:not(#ai-gen), #des-mode .field-select');
-    inputs.forEach(input => input.disabled = false);
-  });
-
-  document.getElementById('generate-button').addEventListener('click', () => {
-    const aiGen = document.getElementById('ai-gen');
-    aiGen.value = '正在生成AI建议...';
-  });
-
-  document.getElementById('execute-button').addEventListener('click', () => {
-    const config = {
-      featureCrew: document.getElementById('feature-crew').value,
-      issue: document.getElementById('issue').value,
-      owner: document.getElementById('owner').value,
-      rootCause: document.getElementById('root-cause').value,
-      state: document.getElementById('state').value,
-      priority: document.getElementById('priority').value
-    };
-    console.log('执行配置:', config);
-  });
-
-  // 初始禁用所有输入字段
-  const inputs = document.querySelectorAll('#des-mode .field-input:not(#ai-gen), #des-mode .field-select');
-  inputs.forEach(input => input.disabled = true);
-}
-
-// 检查页面内容并提取数据
-function checkPageContent() {
-  try {
-    // 获取工作项查询结果
-    const workItems = Array.from(document.querySelectorAll('.grid-row'));
-    const workItemsData = workItems.map(row => {
-      const cells = row.querySelectorAll('.grid-cell');
-      return {
-        id: cells[0]?.textContent?.trim() || '',
-        title: cells[1]?.textContent?.trim() || '',
-        state: cells[2]?.textContent?.trim() || '',
-        assignedTo: cells[3]?.textContent?.trim() || ''
-      };
-    }).filter(item => item.id !== '');
-
-    // 获取查询标题
-    const queryTitle = document.querySelector('.hub-title')?.textContent?.trim() || '未命名查询';
-
-    // 检查登录状态并更新浮窗显示
-    chrome.storage.local.get(['token'], (result) => {
-      const desMode = document.getElementById('des-mode');
-      if (result.token && desMode) {
-        desMode.style.display = 'block';
-        // 发送数据到popup和sidepanel
-        chrome.runtime.sendMessage({
-          type: 'workItemsData',
-          data: {
-            title: queryTitle,
-            items: workItemsData
-          }
-        }, (response) => {
-          // 确保消息得到响应
-          if (chrome.runtime.lastError) {
-            console.error('消息发送错误:', chrome.runtime.lastError);
-          }
-          return true; // 显式返回以保持消息通道
-        });
-      } else if (desMode) {
-        desMode.style.display = 'none';
-      }
-    });
-  } catch (error) {
-    console.error('解析页面数据时出错:', error);
-    chrome.runtime.sendMessage({
-      type: 'error',
-      message: '解析页面数据时出错'
-    });
-  }
-}
-
-// 监听来自popup的消息
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === 'getWorkItems') {
-    checkPageContent();
-  }
-  return true;
-});

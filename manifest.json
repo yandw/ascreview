@@ -1,11 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "VS Work Item Query Helper",
+  "name": "Bing News Feedback Tools",
   "version": "1.0",
-  "description": "一个用于Visual Studio工作项查询页面的辅助工具",
+  "description": "一个用于Bing News Feedback Tools查询页面的辅助工具",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "sidePanel",
+    "storage"
   ],
   "host_permissions": [
     "https://msasg.visualstudio.com/*"
@@ -13,20 +15,23 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/icon16.png",
-      "32": "images/icon32.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
     }
+  },
+  "side_panel": {
+    "name": "Bing News Feedback Tools",
+    "default_path": "sidepanel.html",
+    "default_title": "Bing News Feedback Tools"
   },
   "content_scripts": [{
     "matches": ["https://msasg.visualstudio.com/*"],
     "js": ["content.js"]
   }],
   "icons": {
-    "16": "images/icon16.png",
-    "32": "images/icon32.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
 }
