@@ -1,15 +1,10 @@
-// 初始化页面
-document.addEventListener('DOMContentLoaded', () => {
-  // 添加打开侧边栏按钮的点击事件
-  document.getElementById('open-sidepanel').addEventListener('click', async () => {
+document.getElementById('openSidePanel').addEventListener('click', async () => {
+  if (chrome.sidePanel) {
     try {
-      if (chrome.sidePanel) {
-        await chrome.sidePanel.open();
-      } else {
-        console.error('Side panel API not available');
-      }
+      await chrome.sidePanel.open();
     } catch (error) {
-      console.error('Error opening side panel:', error);
+      console.error('打开侧边栏时出错:', error);
     }
-  });
+  }
+  window.close();
 });

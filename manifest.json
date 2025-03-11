@@ -1,17 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "Bing News Feedback Tools",
-  "version": "1.0",
-  "description": "一个用于Bing News Feedback Tools查询页面的辅助工具",
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "sidePanel",
-    "storage"
-  ],
-  "host_permissions": [
-    "https://msasg.visualstudio.com/*"
-  ],
+  "name": "ASC Review",
+  "version": "1.0.0",
+  "description": "一个支持侧边栏启动的浏览器插件",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -20,18 +16,13 @@
       "128": "icons/icon128.png"
     }
   },
+  "permissions": [
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://msasg.visualstudio.com/*"
+  ],
   "side_panel": {
-    "name": "Bing News Feedback Tools",
-    "default_path": "sidepanel.html",
-    "default_title": "Bing News Feedback Tools"
-  },
-  "content_scripts": [{
-    "matches": ["https://msasg.visualstudio.com/*"],
-    "js": ["content.js"]
-  }],
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "default_path": "sidepanel.html"
   }
 }

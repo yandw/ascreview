@@ -2,177 +2,41 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <title>ASC Review 侧边栏</title>
   <style>
     body {
-      width: 100%;
-      min-width: 300px;
       margin: 0;
-      padding: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      box-sizing: border-box;
-      background-color: #FFFFFF !important;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: white;
     }
     .container {
-      width: 100%;
-    }
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .form-group label {
-      font-size: 14px;
-      color: #333;
-      font-weight: 500;
-    }
-    .form-group input,
-    .form-group select {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-      width: 100%;
+      max-width: 100%;
       background-color: white;
-    }
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: #0078d4;
-    }
-    .login-button,
-    .action-button {
-      padding: 12px;
-      background-color: #0078d4;
-      color: white;
-      border: none;
       border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .login-button {
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .login-button:hover,
-    .action-button:hover {
-      background-color: #106ebe;
-    }
-    .des-mode {
-      margin-top: 20px;
-    }
-    .des-mode h2 {
-      margin: 0 0 16px;
-      font-size: 18px;
+    .title {
+      font-size: 20px;
       color: #333;
+      margin: 0 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
     }
-    .tag-field {
-      display: inline-block;
-      padding: 4px 8px;
-      margin: 4px;
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      font-size: 12px;
-    }
-    .button-group {
-      display: flex;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .action-button {
-      flex: 1;
-      padding: 8px;
-      font-size: 14px;
-    }
-    .action-button.secondary {
-      background-color: white;
-      border: 1px solid #ddd;
-      color: #333;
-    }
-    .error {
-      color: #d83b01;
-      padding: 16px;
-      text-align: center;
-      font-size: 14px;
-    }
-    .loading {
-      text-align: center;
-      padding: 16px;
+    .content {
       color: #666;
-      font-size: 14px;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="content">
-    <div id="login-section" class="login-form">
-      <div class="form-group">
-        <label for="username">用户名</label>
-        <input type="text" id="username" placeholder="请输入用户名">
-      </div>
-      <div class="form-group">
-        <label for="password">密码</label>
-        <input type="password" id="password" placeholder="请输入密码">
-      </div>
-      <button class="login-button" id="login-button">登录</button>
-    </div>
-    <div id="data-section" style="display: none;" class="des-mode">
-      <h2>DES Mode</h2>
-      <div class="form-group">
-        <label>AI-Gen</label>
-        <input type="text" id="ai-gen" disabled>
-      </div>
-      <div class="form-group">
-        <label>Feature Crew</label>
-        <select id="feature-crew">
-          <option value="relevance_ranking">Relevance and Ranking</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Issue</label>
-        <select id="issue">
-          <option value="freshness">Freshness</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Owner</label>
-        <input type="text" id="owner" value="Jing Jin">
-      </div>
-      <div class="form-group">
-        <label>Root Cause</label>
-        <input type="text" id="root-cause" value="News - Category news">
-      </div>
-      <div class="form-group">
-        <label>Tag</label>
-        <div>
-          <span class="tag-field">News_Vertical</span>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>State</label>
-        <select id="state">
-          <option value="active">Active</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Priority</label>
-        <select id="priority">
-          <option value="1">1</option>
-        </select>
-      </div>
-      <div class="button-group">
-        <button class="action-button secondary" id="edit-button">Edit</button>
-        <button class="action-button secondary" id="generate-button">Generate</button>
-        <button class="action-button" id="execute-button">Execute</button>
-      </div>
+  <div class="container">
+    <h1 class="title">ASC Review 侧边栏</h1>
+    <div class="content">
+      <p>欢迎使用 ASC Review 侧边栏功能！</p>
+      <p>这里将展示更多功能和内容。</p>
     </div>
   </div>
-  <script src="sidepanel.js"></script>
 </body>
 </html>
